@@ -9,7 +9,8 @@
     "promise"
   ],
   "globals": {
-    "console": false
+    "console": false,
+    "setTimeout": false
   },
   "rules": {
     "accessor-pairs": 2,
