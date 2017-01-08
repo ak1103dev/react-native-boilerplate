@@ -5,11 +5,11 @@ import {
   Text,
   Button
 } from 'react-native';
-// import { connect } from 'react-redux';
 
-// import * as actions from './actions';
+import { connect } from 'react-redux';
+import { app } from '../../redux/modules';
 
-export default class App extends Component {
+export class App extends Component {
   state = {
     message: 'Welcome to React Native!'
   }
@@ -29,7 +29,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          {this.state.message}
+          {this.props.message}
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
@@ -38,10 +38,10 @@ export default class App extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <Button onPress={this.onClick}
+        <Button onPress={this.props.hello}
           title="Learn More" color="#841584"
           accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={this.onClick2}
+        <Button onPress={this.props.hi}
           title="Learn More" color="#123456"
           accessibilityLabel="Learn more about this purple button" />
       </View>
@@ -68,14 +68,12 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default connect(
-//   (state) => ({
-//     counters: state.app.counters
-//   }),
-//   (dispatch) => ({
-//     addNewCounter: () => dispatch(actions.newCounter()),
-//     increment: (id) => dispatch(actions.increment(id)),
-//     decrement: (id) => dispatch(actions.decrement(id)),
-//     incrementWithDelay: (id) => dispatch(actions.incrementWithDelay(id))
-//   })
-// )(App);
+export default connect(
+  (state) => ({
+    message: state.app.message
+  }),
+  (dispatch) => ({
+    hi: () => dispatch(app.actions.hi()),
+    hello: () => dispatch(app.actions.hello())
+  })
+)(App);
