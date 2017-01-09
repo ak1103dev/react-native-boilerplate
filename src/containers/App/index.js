@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
@@ -67,6 +67,12 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+
+App.propTypes = {
+  message: PropTypes.string,
+  hello: PropTypes.func,
+  hi: PropTypes.func
+};
 
 export default connect(
   (state) => ({
