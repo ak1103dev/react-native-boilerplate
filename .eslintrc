@@ -6,6 +6,9 @@
   "plugin": [
     "react"
   ],
+  "globals": {
+    "console": false
+  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
@@ -35,6 +38,7 @@
     "no-caller": 2,
     "no-class-assign": 2,
     "no-cond-assign": 2,
+    "no-console": 1,
     "no-const-assign": 2,
     "no-constant-condition": [2, { "checkLoops": false }],
     "no-control-regex": 2,
@@ -132,5 +136,7 @@
     "wrap-iife": [2, "any", { "functionPrototypeMethods": true }],
     "yield-star-spacing": [2, "both"],
     "yoda": [2, "never"],
+
+    "react/display-name": 0
   }
 }

@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { app } from '../../redux/modules';
 
-export class App extends Component {
+class Home extends Component {
   state = {
     message: 'Welcome to React Native!'
   }
@@ -29,7 +29,7 @@ export class App extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          {this.props.message}
+          {this.state.message}
         </Text>
         <Text style={styles.instructions}>
           {this.props.title}
@@ -38,14 +38,8 @@ export class App extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <Button onPress={this.props.hello}
-          title="Learn More" color="#841584"
-          accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={this.props.hi}
-          title="Learn More" color="#123456"
-          accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={() => this.props.navigator.push({ id: 'home', title: 'Home', index: 1 })}
-          title="Home" color="#654321"
+        <Button onPress={() => this.props.navigator.replace({ id: 'app', title: 'Home', index: 1 })}
+          title="App" color="#654321"
           accessibilityLabel="Learn more about this purple button" />
       </View>
     );
@@ -71,11 +65,8 @@ const styles = StyleSheet.create({
   }
 });
 
-App.propTypes = {
-  message: PropTypes.string,
+Home.propTypes = {
   title: PropTypes.string,
-  hello: PropTypes.func,
-  hi: PropTypes.func,
   navigator: PropTypes.object
 };
 
@@ -87,4 +78,4 @@ export default connect(
     hi: () => dispatch(app.actions.hi()),
     hello: () => dispatch(app.actions.hello())
   })
-)(App);
+)(Home);
