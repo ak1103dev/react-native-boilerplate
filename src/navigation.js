@@ -1,27 +1,74 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  StyleSheet,
   Navigator,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { App } from './containers';
+import { App, Search } from './containers';
 
 import { connect } from 'react-redux';
 // import { routing } from './redux/modules';
 
 class Navigation extends Component {
-  renderScene(route, navigator) {
-    // switch (route.id) {
-    //   case 'app':
-    //     return <Page title={route.title} navigator={navigator}/>;
-    //   case 'home':
-    //     return <Home title={route.title} navigator={navigator}/>;
-    //   default:
-    //     return;
-    // }
-    return <App title={route.title} navigator={navigator}/>;
+  renderButton(name, navigator) {
+    return (
+      <TouchableHighlight
+        style={styles.button}
+        underlayColor="transparent"
+        onPress={() => navigator.push({ id: name, title: name, index: 1 })}
+      >
+        <Icon
+          name={name}
+          size={30}
+          color="white"
+        />
+      </TouchableHighlight>
+    );
   }
+  renderScene(route, navigator) {
+    switch (route.id) {
+      case 'search':
+        return <Search title={route.title} navigator={navigator}/>;
+      default:
+        return <App title={route.title} navigator={navigator}/>;
+    }
+  }
+  renderLeftButton(route, navigator, index, navState) {
+    if (index > 0) {
+      return (
+        <TouchableHighlight
+          underlayColor="transparent"
+          style={styles.backButton}
+          onPress={() => {
+            if (index > 0) navigator.pop();
+          }}
+        >
+          <Icon
+            name="chevron-left"
+            size={30}
+            color="white"
+          />
+        </TouchableHighlight>);
+    } else { return null; }
+  }
+  renderRightButton(route, navigator, index, navState) {
+    return (
+      <View style={styles.buttonGroup}>
+        {this.renderButton('search', navigator)}
+        {this.renderButton('ellipsis-v', navigator)}
+      </View>
+    );
+  }
+  renderTitle(route, navigator, index, navState) {
+    return (
+      <Text style={styles.title}>{this.props.route.name}</Text>
+    );
+  }
+
   render() {
     return (
       <Navigator
@@ -30,20 +77,11 @@ class Navigation extends Component {
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={{
-              LeftButton: (route, navigator, index, navState) => {
-                if (index > 0) {
-                  return (
-                    <TouchableHighlight
-                      underlayColor="transparent"
-                      onPress={() => { if (index > 0) { navigator.pop(); } }}>
-                      <Text>Back</Text>
-                    </TouchableHighlight>);
-                } else { return null; }
-              },
-              RightButton: (route, navigator, index, navState) => <Text>Done</Text>,
-              Title: (route, navigator, index, navState) => <Text>{this.props.route.name}</Text>
+              LeftButton: this.renderLeftButton.bind(this),
+              RightButton: this.renderRightButton.bind(this),
+              Title: this.renderTitle.bind(this)
             }}
-            style={{backgroundColor: 'gray'}}
+            style={styles.navigationBar}
           />
         }
       />
@@ -61,3 +99,27 @@ export default connect(
   }),
   (dispatch) => ({})
 )(Navigation);
+
+const styles = StyleSheet.create({
+  navigationBar: {
+    backgroundColor: 'gray'
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginRight: 5
+  },
+  button: {
+    width: 30,
+    height: 30,
+    alignItems: 'center'
+  },
+  backButton: {
+    top: 10
+  },
+  title: {
+    color: '#FFF',
+    fontSize: 20,
+    top: 10
+  }
+});
