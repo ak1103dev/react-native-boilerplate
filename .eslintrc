@@ -4,14 +4,15 @@
     "jsx": true
   },
   "plugin": [
-    "react",
-    "standard",
-    "promise"
+    "react"
   ],
   "globals": {
-    "console": false,
-    "setTimeout": false
+    "console": false
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "rules": {
     "accessor-pairs": 2,
     "arrow-spacing": [2, { "before": true, "after": true }],
@@ -37,6 +38,7 @@
     "no-caller": 2,
     "no-class-assign": 2,
     "no-cond-assign": 2,
+    "no-console": 1,
     "no-const-assign": 2,
     "no-constant-condition": [2, { "checkLoops": false }],
     "no-control-regex": 2,
@@ -135,25 +137,6 @@
     "yield-star-spacing": [2, "both"],
     "yoda": [2, "never"],
 
-    "react/display-name": 0,
-    "react/jsx-boolean-value": 0,
-    "react/jsx-no-duplicate-props": 2,
-    "react/jsx-no-undef": 1,
-    "react/jsx-sort-props": 0,
-    "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1,
-    "react/no-multi-comp": 0,
-    "react/no-string-refs": 1,
-    "react/no-unknown-property": 0,
-    "react/prop-types": 0,
-    "react/react-in-jsx-scope": 1,
-    "react/self-closing-comp": 1,
-    "react/wrap-multilines": 0,
-
-    "standard/object-curly-even-spacing": [2, "either"],
-    "standard/array-bracket-even-spacing": [2, "either"],
-    "standard/computed-property-even-spacing": [2, "even"],
-
-    "promise/param-names": 2
+    "react/display-name": 0
   }
 }

@@ -1,8 +1,7 @@
 import app from './app';
+import routing from './routing';
 
-// in this section keep importing your modules
-
-// and exporting them here
 export {
-  app
+  app,
+  routing
 };

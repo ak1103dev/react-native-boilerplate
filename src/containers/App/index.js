@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  Button
+  StyleSheet
 } from 'react-native';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+
+import { Home, Page } from '../index';
+import { CustomTabBar } from '../../components';
 
 import { connect } from 'react-redux';
-import { app } from '../../redux/modules';
+import { app, routing } from '../../redux/modules';
 
 export class App extends Component {
   state = {
@@ -26,25 +27,19 @@ export class App extends Component {
   }
 
   render() {
+    const name = [
+      'Page',
+      'Home'
+    ];
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {this.props.message}
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-        <Button onPress={this.props.hello}
-          title="Learn More" color="#841584"
-          accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={this.props.hi}
-          title="Learn More" color="#123456"
-          accessibilityLabel="Learn more about this purple button" />
-      </View>
+      <ScrollableTabView
+        style={styles.container}
+        renderTabBar={() => <CustomTabBar />}
+        onChangeTab={({ from, i }) => this.props.changeRoute({ name: name[i] })}
+      >
+        <Page tabLabel='bell' />
+        <Home tabLabel='home' />
+      </ScrollableTabView>
     );
   }
 }
@@ -54,7 +49,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    top: 60
   },
   welcome: {
     fontSize: 20,
@@ -68,12 +64,22 @@ const styles = StyleSheet.create({
   }
 });
 
+App.propTypes = {
+  message: PropTypes.string,
+  title: PropTypes.string,
+  hello: PropTypes.func,
+  hi: PropTypes.func,
+  changeRoute: PropTypes.func,
+  navigator: PropTypes.object
+};
+
 export default connect(
   (state) => ({
     message: state.app.message
   }),
   (dispatch) => ({
     hi: () => dispatch(app.actions.hi()),
-    hello: () => dispatch(app.actions.hello())
+    hello: () => dispatch(app.actions.hello()),
+    changeRoute: (route) => dispatch(routing.actions.changeRoute(route))
   })
 )(App);
