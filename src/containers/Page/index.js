@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  Button
+  Text
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -12,6 +11,9 @@ import { app } from '../../redux/modules';
 export class Page extends Component {
   state = {
     message: 'Welcome to React Native!'
+  }
+  componentDidMount() {
+    this.props.loadData();
   }
 
   onClick = () => {
@@ -34,19 +36,15 @@ export class Page extends Component {
         <Text style={styles.instructions}>
           {this.props.title}
         </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-        <Button onPress={this.props.hello}
-          title="Learn More" color="#841584"
-          accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={this.props.hi}
-          title="Learn More" color="#123456"
-          accessibilityLabel="Learn more about this purple button" />
-        <Button onPress={() => this.props.navigator.push({ id: 'home', title: 'Home', index: 1 })}
-          title="Home" color="#654321"
-          accessibilityLabel="Learn more about this purple button" />
+        {
+          this.props.data.map((datum) => {
+            return (
+              <Text key={datum} style={styles.instructions}>
+                {datum}
+              </Text>
+            );
+          })
+        }
       </View>
     );
   }
@@ -76,15 +74,19 @@ Page.propTypes = {
   title: PropTypes.string,
   hello: PropTypes.func,
   hi: PropTypes.func,
-  navigator: PropTypes.object
+  loadData: PropTypes.func,
+  navigator: PropTypes.object,
+  data: PropTypes.array
 };
 
 export default connect(
   (state) => ({
-    message: state.app.message
+    message: state.app.message,
+    data: state.app.data
   }),
   (dispatch) => ({
     hi: () => dispatch(app.actions.hi()),
-    hello: () => dispatch(app.actions.hello())
+    hello: () => dispatch(app.actions.hello()),
+    loadData: () => dispatch(app.actions.loadData())
   })
 )(Page);
