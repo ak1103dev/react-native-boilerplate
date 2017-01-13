@@ -1,8 +1,6 @@
 # react-native-boilerplate
----
 
 ## Getting Started
----
 
 ### Prepare
 you can see the following in https://facebook.github.io/react-native/docs/getting-started.html
@@ -12,7 +10,6 @@ you can see the following in https://facebook.github.io/react-native/docs/gettin
 - install react native cli by run `npm install -g react-native-cli`
 
 - install environment for app development such as Android SDK or Xcode
-
 
 ### How to use
 
@@ -29,7 +26,7 @@ you can see the following in https://facebook.github.io/react-native/docs/gettin
 - run `react-native start` for start dev server
 
 ## Dependencies
----
+
 I use the following technologies:
 - [babel](http://babeljs.io/) for ES6+
 - [react](https://github.com/facebook/react)
