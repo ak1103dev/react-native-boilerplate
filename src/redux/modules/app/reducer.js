@@ -1,7 +1,12 @@
-import { HELLO, HI } from './constants';
+import {
+  HELLO,
+  HI,
+  LOAD_DATA
+} from './constants';
 
 const initialState = {
-  message: 'Welcome'
+  message: 'Welcome',
+  data: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -15,6 +20,11 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         message: 'HI John!!!'
+      };
+    case LOAD_DATA.success:
+      return {
+        ...state,
+        data: action.payload
       };
     default:
       return state;

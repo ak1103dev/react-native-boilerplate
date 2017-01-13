@@ -7,7 +7,9 @@
     "react"
   ],
   "globals": {
-    "console": false
+    "console": false,
+    "Promise": false,
+    "fetch": false
   },
   "extends": [
     "eslint:recommended",
