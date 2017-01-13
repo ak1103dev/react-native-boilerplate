@@ -6,9 +6,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-// import { connect } from 'react-redux';
-// import { routing } from '../../redux/modules';
-
 const CustomTabBar = React.createClass({
   tabIcons: [],
 
@@ -88,9 +85,3 @@ const styles = StyleSheet.create({
 });
 
 export default CustomTabBar;
-// export default connect(
-//   (state) => ({}),
-//   (dispatch) => ({
-//     changeRoute: (route) => dispatch(routing.actions.changeRoute(route))
-//   })
-// )(CustomTabBar);

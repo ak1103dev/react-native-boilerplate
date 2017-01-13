@@ -8,21 +8,26 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { App, Search } from './containers';
+import { App, Search, More } from './containers';
 
 import { connect } from 'react-redux';
-// import { routing } from './redux/modules';
+import { routing } from './redux/modules';
 
 class Navigation extends Component {
-  renderButton(name, navigator) {
+  renderButton(id, title, iconName, navigator) {
     return (
       <TouchableHighlight
         style={styles.button}
         underlayColor="transparent"
-        onPress={() => navigator.push({ id: name, title: name, index: 1 })}
+        onPress={() => {
+          if (id !== this.props.route.id) {
+            navigator.push({ id, title, index: 1 });
+            this.props.changeRoute({ id, title, index: 1 });
+          }
+        }}
       >
         <Icon
-          name={name}
+          name={iconName}
           size={30}
           color="white"
         />
@@ -32,9 +37,11 @@ class Navigation extends Component {
   renderScene(route, navigator) {
     switch (route.id) {
       case 'search':
-        return <Search title={route.title} navigator={navigator}/>;
+        return <Search navigator={navigator}/>;
+      case 'more':
+        return <More navigator={navigator}/>;
       default:
-        return <App title={route.title} navigator={navigator}/>;
+        return <App navigator={navigator}/>;
     }
   }
   renderLeftButton(route, navigator, index, navState) {
@@ -44,7 +51,10 @@ class Navigation extends Component {
           underlayColor="transparent"
           style={styles.backButton}
           onPress={() => {
-            if (index > 0) navigator.pop();
+            if (index > 0) {
+              navigator.popToTop();
+              this.props.changeRoute({ id: 'app', title: 'Home', index: 0 });
+            }
           }}
         >
           <Icon
@@ -58,14 +68,14 @@ class Navigation extends Component {
   renderRightButton(route, navigator, index, navState) {
     return (
       <View style={styles.buttonGroup}>
-        {this.renderButton('search', navigator)}
-        {this.renderButton('ellipsis-v', navigator)}
+        {this.renderButton('search', 'Search', 'search', navigator)}
+        {this.renderButton('more', 'More', 'ellipsis-v', navigator)}
       </View>
     );
   }
   renderTitle(route, navigator, index, navState) {
     return (
-      <Text style={styles.title}>{this.props.route.name}</Text>
+      <Text style={styles.title}>{this.props.route.title}</Text>
     );
   }
 
@@ -90,14 +100,17 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  route: PropTypes.object
+  route: PropTypes.object,
+  changeRoute: PropTypes.func
 };
 
 export default connect(
   (state) => ({
-    route: state.routing.route
+    route: state.routing
   }),
-  (dispatch) => ({})
+  (dispatch) => ({
+    changeRoute: (route) => dispatch(routing.actions.changeRoute(route))
+  })
 )(Navigation);
 
 const styles = StyleSheet.create({
