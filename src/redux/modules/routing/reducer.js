@@ -1,9 +1,9 @@
 import { ROUTE } from './constants';
 
 const initialState = {
-  route: {
-    name: 'App'
-  }
+  id: 'app',
+  title: 'Home',
+  index: 0
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -11,7 +11,9 @@ export default function reducer(state = initialState, action = {}) {
     case ROUTE:
       return {
         ...state,
-        route: action.route
+        id: action.route.id,
+        title: action.route.title,
+        index: action.route.index
       };
     default:
       return state;

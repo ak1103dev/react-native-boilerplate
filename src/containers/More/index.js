@@ -1,16 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  View,
+  Text
 } from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-import { Home, Page } from '../index';
-import { CustomTabBar } from '../../components';
 
 import { connect } from 'react-redux';
-import { app, routing } from '../../redux/modules';
+import { app } from '../../redux/modules';
 
-export class App extends Component {
+export class More extends Component {
   state = {
     message: 'Welcome to React Native!'
   }
@@ -27,19 +25,19 @@ export class App extends Component {
   }
 
   render() {
-    const name = [
-      'Home',
-      'Page'
-    ];
     return (
-      <ScrollableTabView
-        style={styles.container}
-        renderTabBar={() => <CustomTabBar />}
-        onChangeTab={({ from, i }) => this.props.changeRoute({ id: 'app', title: name[i], index: 0 })}
-      >
-        <Home tabLabel='home' />
-        <Page tabLabel='bell' />
-      </ScrollableTabView>
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          {this.props.message}
+        </Text>
+        <Text style={styles.instructions}>
+          {this.props.title}
+        </Text>
+        <Text style={styles.instructions}>
+          Double tap R on your keyboard to reload,{'\n'}
+          Shake or press menu button for dev menu
+        </Text>
+      </View>
     );
   }
 }
@@ -49,8 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    top: 60
+    backgroundColor: '#F5FCFF'
   },
   welcome: {
     fontSize: 20,
@@ -64,12 +61,11 @@ const styles = StyleSheet.create({
   }
 });
 
-App.propTypes = {
+More.propTypes = {
   message: PropTypes.string,
   title: PropTypes.string,
   hello: PropTypes.func,
   hi: PropTypes.func,
-  changeRoute: PropTypes.func,
   navigator: PropTypes.object
 };
 
@@ -79,7 +75,6 @@ export default connect(
   }),
   (dispatch) => ({
     hi: () => dispatch(app.actions.hi()),
-    hello: () => dispatch(app.actions.hello()),
-    changeRoute: (route) => dispatch(routing.actions.changeRoute(route))
+    hello: () => dispatch(app.actions.hello())
   })
-)(App);
+)(More);
