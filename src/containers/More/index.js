@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  Button
+  Text
 } from 'react-native';
 
 import { connect } from 'react-redux';
