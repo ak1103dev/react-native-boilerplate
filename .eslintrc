@@ -9,7 +9,11 @@
   "globals": {
     "console": false,
     "Promise": false,
-    "fetch": false
+    "fetch": false,
+
+    "describe": false,
+    "it": false,
+    "expect": false
   },
   "extends": [
     "eslint:recommended",
